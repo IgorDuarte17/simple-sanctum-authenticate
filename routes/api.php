@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => config('api.version')], function() {
+
+    Route::post('auth/login', [AuthController::class, 'login']);
+    Route::post('auth/logout/{accessToken}', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('auth/user/{accessToken}', [AuthController::class, 'getUserByToken'])->middleware('auth:sanctum');
+
+    Route::get('/', function () {
+        return response()->json([
+            'name' => env('API_NAME'),
+            'version' => env('API_VERSION')
+        ]);
+    });//->middleware('auth:sanctum');
 });
