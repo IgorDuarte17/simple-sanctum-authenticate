@@ -18,6 +18,10 @@ refresh:  		## Put down, rebuild and up all docker containers.
 in: 	        	## Show user a list of avaliable docker containers to go inside like root.
 	@bash ./.docker/scripts/in.sh
 
+
+logs:			## Show logs of all containers.
+	@bash ./.docker/scripts/docker-log.sh
+
 composer-install:	## Install composer in php container.
 	@bash ./.docker/scripts/composer-install.sh
 
